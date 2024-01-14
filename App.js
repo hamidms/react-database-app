@@ -17,7 +17,7 @@ const App = () => {
           component={HomeScreen} 
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Icon name="calculate" size={30} />
+              <Icon name="calculate" size={30} color={'#43766C'}/>
             ),
           }}
         />
@@ -26,7 +26,7 @@ const App = () => {
           component={LaporanScreen} 
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Icon name="list-alt" size={30} />
+              <Icon name="list-alt" size={30} color={'#43766C'}/>
             ),
             }}
           />

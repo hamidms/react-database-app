@@ -23,7 +23,7 @@ const LaporanScreen = ({ navigation }) => {
       tx.executeSql('DELETE FROM inputs');
     });
 
-    fetchData(); // Refresh data after clearing the database
+    fetchData(); 
   };
 
   useEffect(() => {
@@ -32,7 +32,6 @@ const LaporanScreen = ({ navigation }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      // Refresh data when the screen is focused
       fetchData();
     });
 
@@ -45,7 +44,7 @@ const LaporanScreen = ({ navigation }) => {
             <Text style={styles.clearButtonText}>Clear Database</Text>
           </TouchableOpacity>
       {data.length === 0 ? (
-        <Text>No data available</Text>
+        <Text style={styles.noData}>No data available</Text>
       ) : (
         <FlatList
           data={data}
@@ -65,8 +64,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10
-    // justifyContent: 'center',
-    // alignItems: 'center',
+  },
+  noData: {
+    textAlign: 'center',
+    color: 'black'
   },
   item: {
     padding: 10,

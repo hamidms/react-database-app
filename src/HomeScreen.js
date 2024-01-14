@@ -33,6 +33,7 @@ const HomeScreen = () => {
         style={styles.input}
         keyboardType="numeric"
         placeholder="Input Number"
+        placeholderTextColor='black'
         value={inputValue}
         editable={false} // Disable direct editing
       />
