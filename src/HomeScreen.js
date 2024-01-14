@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { Button, FlatList, StatusBar, Text, TextInput, View } from "react-native";
 import { openDatabase } from 'react-native-sqlite-storage'
 
@@ -8,7 +8,7 @@ const db = openDatabase({
 
 const HomeScreen = () => {
     const [category, setCategory] = useState("");
-    const [categories, setCategories] = useState([]);
+    // const [categories, setCategories] = useState([]);
 
     const createTables = () => {
         db.transaction(txn => {
@@ -88,11 +88,27 @@ const HomeScreen = () => {
         )
     }
 
-    useEffect(async () => {
-        await createTables();
-        await getCategories();
-        // createTables();
-    }, []);
+    const clearDatabase = () => {
+        db.transaction(txn => {
+            txn.executeSql(
+                `DELETE FROM categories`,
+                [],
+                (sqlTxn, res) => {
+                    console.log('Database cleared successfully');
+                    getCategories(); // Perbarui tampilan setelah menghapus data
+                },
+                error => {
+                    console.log('Error clearing database: ' + error.message);
+                }
+            );
+        });
+    };
+
+    // useEffect(async () => {
+    //     await createTables();
+    //     // await getCategories();
+    //     // createTables();
+    // }, []);
 
     return (
         <View>
@@ -107,7 +123,9 @@ const HomeScreen = () => {
 
             <Button title="Submit" onPress={ addCategory } />
 
-            <FlatList data={categories} renderItem={renderCategory} key={cat => cat.id}/>
+            {/* <FlatList data={categories} renderItem={renderCategory} key={cat => cat.id}/> */}
+            <Button title="Clear Database" onPress={clearDatabase} />
+
         </View>
     )
 }
