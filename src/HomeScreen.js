@@ -31,33 +31,33 @@ const HomeScreen = () => {
       <TextInput
         style={styles.input}
         keyboardType="numeric"
-        placeholder="Enter a number"
+        placeholder="Input Number"
         value={inputValue}
         editable={false} // Disable direct editing
       />
       <View style={styles.buttonRow}>
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('7')}>
-          <Text style={styles.buttonText}>7</Text>
+          <Text style={styles.buttonNumber}>7</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('8')}>
-          <Text style={styles.buttonText}>8</Text>
+          <Text style={styles.buttonNumber}>8</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('9')}>
-          <Text style={styles.buttonText}>9</Text>
+          <Text style={styles.buttonNumber}>9</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('0')}>
-          <Text style={styles.buttonText}>0</Text>
+          <Text style={styles.buttonNumber}>0</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.buttonRow}>
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('4')}>
-          <Text style={styles.buttonText}>4</Text>
+          <Text style={styles.buttonNumber}>4</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('5')}>
-          <Text style={styles.buttonText}>5</Text>
+          <Text style={styles.buttonNumber}>5</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('6')}>
-          <Text style={styles.buttonText}>6</Text>
+          <Text style={styles.buttonNumber}>6</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleClear}>
           <Text style={styles.buttonText}>Clear</Text>
@@ -65,13 +65,13 @@ const HomeScreen = () => {
       </View>
       <View style={styles.buttonRow}>
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('1')}>
-          <Text style={styles.buttonText}>1</Text>
+          <Text style={styles.buttonNumber}>1</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('2')}>
-          <Text style={styles.buttonText}>2</Text>
+          <Text style={styles.buttonNumber}>2</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('3')}>
-          <Text style={styles.buttonText}>3</Text>
+          <Text style={styles.buttonNumber}>3</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={saveData}>
           <Text style={styles.buttonText}>Save</Text>
@@ -88,11 +88,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    width: '80%',
-    borderColor: 'gray',
+    width: '78%',
+    borderColor: '#43766C',
     borderWidth: 1,
-    padding: 10,
-    marginBottom: 10,
+    padding: 15,
+    marginBottom: 20,
+    color: '#43766C',
+    borderRadius: 3
   },
   buttonRow: {
     flexDirection: 'row',
@@ -101,16 +103,24 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    backgroundColor: '#3498db',
+    backgroundColor: '#43766C',
     padding: 15,
+    paddingVertical: 20,
     borderRadius: 5,
     flex: 1,
     margin: 5,
   },
+  buttonNumber: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 25
+  },
   buttonText: {
     color: 'white',
     textAlign: 'center',
-  },
+    fontWeight: 'bold',
+    fontSize: 15
+  }
 });
 
 export default HomeScreen;
