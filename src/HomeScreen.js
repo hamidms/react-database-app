@@ -46,9 +46,6 @@ const HomeScreen = () => {
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('9')}>
           <Text style={styles.buttonNumber}>9</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('0')}>
-          <Text style={styles.buttonNumber}>0</Text>
-        </TouchableOpacity>
       </View>
       <View style={styles.buttonRow}>
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('4')}>
@@ -59,10 +56,6 @@ const HomeScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('6')}>
           <Text style={styles.buttonNumber}>6</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleClear}>
-          {/* <Text style={styles.buttonText}>Clear</Text> */}
-          <Icon name="delete-forever" size={30} style={styles.buttonText}/>
         </TouchableOpacity>
       </View>
       <View style={styles.buttonRow}>
@@ -75,8 +68,15 @@ const HomeScreen = () => {
         <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('3')}>
           <Text style={styles.buttonNumber}>3</Text>
         </TouchableOpacity>
+      </View>
+      <View style={styles.buttonRow}>
+        <TouchableOpacity style={styles.button} onPress={handleClear}>
+          <Icon name="delete-forever" size={30} style={styles.buttonText}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => handleButtonPress('0')}>
+          <Text style={styles.buttonNumber}>0</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={saveData}>
-          {/* <Text style={styles.buttonText}>Save</Text> */}
           <Icon name="save-alt" size={30} style={styles.buttonText}/>
         </TouchableOpacity>
       </View>
