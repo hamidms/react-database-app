@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const HomeScreen = () => {
   const [inputValue, setInputValue] = useState('');
@@ -60,7 +61,8 @@ const HomeScreen = () => {
           <Text style={styles.buttonNumber}>6</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleClear}>
-          <Text style={styles.buttonText}>Clear</Text>
+          {/* <Text style={styles.buttonText}>Clear</Text> */}
+          <Icon name="delete-forever" size={30} style={styles.buttonText}/>
         </TouchableOpacity>
       </View>
       <View style={styles.buttonRow}>
@@ -74,7 +76,8 @@ const HomeScreen = () => {
           <Text style={styles.buttonNumber}>3</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={saveData}>
-          <Text style={styles.buttonText}>Save</Text>
+          {/* <Text style={styles.buttonText}>Save</Text> */}
+          <Icon name="save-alt" size={30} style={styles.buttonText}/>
         </TouchableOpacity>
       </View>
     </View>
@@ -113,13 +116,12 @@ const styles = StyleSheet.create({
   buttonNumber: {
     color: 'white',
     textAlign: 'center',
-    fontSize: 25
+    fontSize: 25,
+    fontWeight: '300'
   },
   buttonText: {
     color: 'white',
     textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 15
   }
 });
 
