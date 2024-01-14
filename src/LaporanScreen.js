@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
 
 const LaporanScreen = ({ navigation }) => {
@@ -10,10 +10,20 @@ const LaporanScreen = ({ navigation }) => {
 
     db.transaction((tx) => {
       tx.executeSql('CREATE TABLE IF NOT EXISTS inputs (id INTEGER PRIMARY KEY AUTOINCREMENT, value TEXT)');
-      tx.executeSql('SELECT * FROM inputs', [], (_, result) => {
+      tx.executeSql('SELECT * FROM inputs ORDER BY id DESC', [], (_, result) => {
         setData(result.rows.raw());
       });
     });
+  };
+
+  const clearDatabase = () => {
+    const db = SQLite.openDatabase({ name: 'MyDatabase.db', location: 'default' });
+
+    db.transaction((tx) => {
+      tx.executeSql('DELETE FROM inputs');
+    });
+
+    fetchData(); // Refresh data after clearing the database
   };
 
   useEffect(() => {
@@ -31,6 +41,9 @@ const LaporanScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.clearButton} onPress={clearDatabase}>
+            <Text style={styles.clearButtonText}>Clear Database</Text>
+          </TouchableOpacity>
       {data.length === 0 ? (
         <Text>No data available</Text>
       ) : (
@@ -39,7 +52,7 @@ const LaporanScreen = ({ navigation }) => {
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <View style={styles.item}>
-              <Text>{item.value}</Text>
+              <Text style={styles.text}>{item.value}</Text>
             </View>
           )}
         />
@@ -51,13 +64,27 @@ const LaporanScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 10
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   item: {
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+  },
+  text: {
+    color: '#43766C'
+  },
+  clearButton: {
+    margin: 10,
+    backgroundColor: '#e74c3c',
+    padding: 10,
+    borderRadius: 5,
+  },
+  clearButtonText: {
+    color: 'white',
+    textAlign: 'center',
   },
 });
 
