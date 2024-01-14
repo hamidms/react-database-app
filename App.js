@@ -7,13 +7,15 @@ import LaporanScreen from './src/LaporanScreen';
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={ HomeScreen } />
-        <Tab.Screen name="Laporan" component={ LaporanScreen } />
+      <Tab.Navigator initialRouteName="Input">
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Laporan" component={LaporanScreen} />
       </Tab.Navigator>
     </NavigationContainer>
-  )
-}
+  );
+};
+
+export default App;

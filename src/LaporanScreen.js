@@ -1,68 +1,64 @@
-import React, { useEffect, useState } from "react";
-import { Text, View, FlatList } from "react-native";
-import { openDatabase } from 'react-native-sqlite-storage'
-import { useIsFocused } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
+import SQLite from 'react-native-sqlite-storage';
 
-const db = openDatabase({
-    name: "rn_sqlite"
-})
+const LaporanScreen = ({ navigation }) => {
+  const [data, setData] = useState([]);
 
-const LaporanScreen = () => {
-    const [categories, setCategories] = useState([]);
-    const isFocused = useIsFocused();
+  const fetchData = () => {
+    const db = SQLite.openDatabase({ name: 'MyDatabase.db', location: 'default' });
 
-    const getCategories = () => {
-        db.transaction(txn => {
-            txn.executeSql(
-                `SELECT * FROM categories ORDER BY id DESC`,
-                [],
-                (sqlTxn, res) => {
-                    console.log('categories retrieved successfully');
-                    let len = res.rows.length;
+    db.transaction((tx) => {
+      tx.executeSql('CREATE TABLE IF NOT EXISTS inputs (id INTEGER PRIMARY KEY AUTOINCREMENT, value TEXT)');
+      tx.executeSql('SELECT * FROM inputs', [], (_, result) => {
+        setData(result.rows.raw());
+      });
+    });
+  };
 
-                    if (len > 0) {
-                        let results = [];
-                        for (let i = 0; i < len; i++) {
-                            let item = res.rows.item(i);
-                            results.push({ id: item.id, name: item.name });
-                        }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-                        setCategories(results);
-                    }
-                },
-                error => {
-                    console.log('error on getting categories ' + error.message);
-                }
-            );
-        });
-    };
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      // Refresh data when the screen is focused
+      fetchData();
+    });
 
-    const renderCategory = ({ item }) => {
-        return (
-            <View style={{ 
-                flexDirection: "row",
-                paddingVertical: 12,
-                paddingHorizontal: 10,
-                borderBottomWidth: 1,
-                borderColor: '#ddd'
-             }}>
-                {/* <Text style={{ marginRight: 9 }}>{ item.id }</Text> */}
-                <Text>{ item.name }</Text>
+    return unsubscribe;
+  }, [navigation]);
+
+  return (
+    <View style={styles.container}>
+      {data.length === 0 ? (
+        <Text>No data available</Text>
+      ) : (
+        <FlatList
+          data={data}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.item}>
+              <Text>{item.value}</Text>
             </View>
-        )
-    }
+          )}
+        />
+      )}
+    </View>
+  );
+};
 
-    useEffect(() => {
-        getCategories();
-    }, [isFocused]);
-
-
-    return (
-        <View>
-            <Text>Laporan</Text>
-            <FlatList data={categories} renderItem={renderCategory} key={cat => cat.id}/>
-        </View>
-    )
-}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  item: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+});
 
 export default LaporanScreen;
